@@ -1,4 +1,7 @@
+import Script from 'next/script';
 import './globals.css';
+
+const GA_ID = 'G-S3JYP1KVK6';
 
 export const metadata = {
   metadataBase: new URL('https://texasflangesupply.com'),
@@ -88,7 +91,17 @@ export default function RootLayout({ children }) {
           }}
         />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        {/* Google Analytics 4 (shared pillar property) */}
+        <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
+        <Script id="ga4" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${GA_ID}');`}
+        </Script>
+      </body>
     </html>
   );
 }
